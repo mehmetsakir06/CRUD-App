@@ -7,8 +7,25 @@ export const userSlice = createSlice({
     reducers: {
         addNewUser: (state, action) => {
             state.push(action.payload)
+        },
+        updateUser: (state, action) => {
+            const { id, name, surname, email, phone, address } = action.payload;
+            const updUser = state.find(user => user.id == id);
+            if (updUser) {
+                updUser.name = name;
+                updUser.surname = surname;
+                updUser.email = email;
+                updUser.phone = phone;
+                updUser.address = address;
+
+            }
+        },
+        deleteUser: (state, action) => {
+            const { id } = action.payload;
+            return (state.find(user => user.id == id) && state.filter(f => f.id !== id))
         }
     }
-})
-export const { addNewUser } = userSlice.actions;
+}
+)
+export const { addNewUser, updateUser, deleteUser } = userSlice.actions;
 export default userSlice.reducer;

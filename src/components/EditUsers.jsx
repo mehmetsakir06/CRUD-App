@@ -1,38 +1,40 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewUser } from '../ReduxAssets/UserReducers';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { updateUser } from '../ReduxAssets/UserReducers';
 
 
-function CreateNewUsers() {
-    const [name, setName] = useState('');
-    const [surname, setSurname] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [address, setAddress] = useState('');
-
+function EditUsers() {
+    const { id } = useParams();
     const users = useSelector((state) => state.users);
+    const selectedUser = users.filter(u => u.id == id);
+    const { name, surname, email, phone, address } = selectedUser[0];
+    const [updatename, setUpdatename] = useState(name);
+    const [updatesurname, setUpdatesurname] = useState(surname);
+    const [updateemail, setUpdateemail] = useState(email);
+    const [updatephone, setUpdatephone] = useState(phone);
+    const [updateaddress, setUpdateaddress] = useState(address);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        dispatch(addNewUser({ id: users.length + 1, name, surname, email, phone, address }));
-        navigate('/');
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        dispatch(updateUser({ id: id, name: updatename, surname: updatesurname, email: updateemail, phone: updatephone, address: updateaddress }));
+        navigate('/')
     }
-
     return (
         <div className='d-flex  w-150 vh-100 justify-content-center align-items-center'>
             <div className='w-50 border bg-info text-white p-5 '>
-                <h2>Add New User</h2>
-                <form onSubmit={handleSubmit}>
+                <h2>Update User</h2>
+                <form onSubmit={handleUpdate} >
                     <div>
                         <label htmlFor="name">Name</label>
                         <input
                             type="text"
                             name='name'
                             className='form-control'
-                            onChange={e => setName(e.target.value)}
+                            value={updatename}
+                            onChange={e => setUpdatename(e.target.value)}
                         />
                     </div>
                     <div>
@@ -41,7 +43,8 @@ function CreateNewUsers() {
                             type="text"
                             name='surname'
                             className='form-control'
-                            onChange={e => setSurname(e.target.value)}
+                            value={updatesurname}
+                            onChange={e => setUpdatesurname(e.target.value)}
                         />
                     </div>
                     <div>
@@ -50,7 +53,8 @@ function CreateNewUsers() {
                             type="email"
                             name='email'
                             className='form-control'
-                            onChange={e => setEmail(e.target.value)}
+                            value={updateemail}
+                            onChange={e => setUpdateemail(e.target.value)}
                         />
                     </div>
                     <div>
@@ -59,7 +63,8 @@ function CreateNewUsers() {
                             type="number"
                             name='phone'
                             className='form-control'
-                            onChange={e => setPhone(e.target.value)}
+                            value={updatephone}
+                            onChange={e => setUpdatephone(e.target.value)}
                         />
                     </div>
                     <div>
@@ -68,16 +73,18 @@ function CreateNewUsers() {
                             type="text"
                             name='address'
                             className=' form-control'
-                            onChange={e => setAddress(e.target.value)}
+                            value={updateaddress}
+                            onChange={e => setUpdateaddress(e.target.value)}
                         />
                     </div>
 
-                    <button className='btn btn-primary mt-2  '>Submit</button>
+                    <button className='btn btn-primary mt-2   '>Update</button>
+
                 </form>
+
             </div>
         </div>
     )
-
 }
 
-export default CreateNewUsers;
+export default EditUsers;

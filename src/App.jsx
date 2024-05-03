@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DataList from './components/DataList';
-import CreateNewUsers from './components/CreateNewUsers';
+import CreateNewUser from './components/CreateNewUser';
+import EditUsers from './components/EditUsers';
+import ReadUser from './components/ReadUser';
 
 function App() {
 
@@ -10,7 +12,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<DataList />} > </Route>
-        <Route path='/create' element={<CreateNewUsers />} ></Route>
+        <Route path='/create' element={<CreateNewUser />} ></Route>
+        <Route path='/edit/:id' element={<EditUsers />} ></Route>
+        <Route path='/read/:id' element={<ReadUser />} ></Route>
       </Routes>
     </BrowserRouter>
   )

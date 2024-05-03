@@ -1,15 +1,20 @@
 export const userData = [
     {
+        id: 1,
         name: "Ali",
         surname: "Demir",
         email: "ali@gmail.com",
-        id: 1
+        phone: "05551234567",
+        address: "İstanbul"
 
     },
     {
+        id: 2,
         name: "Ahmet",
         surname: "Taş",
         email: "ahmet@hotmail.com",
-        id: 2
+        phone: "05541234567",
+        address: "Ankara"
+
     }
 ]

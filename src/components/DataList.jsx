@@ -1,10 +1,16 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { deleteUser } from '../ReduxAssets/UserReducers';
+
 
 function DataList() {
     const users = useSelector((state) => state.users);
+    const dispatch = useDispatch();
+    const handleDelete = (id) => {
+        dispatch(deleteUser({ id: id }))
 
+    }
 
     return (
         <div className='container'>
@@ -31,9 +37,9 @@ function DataList() {
                                 <td>{user.surname} </td>
                                 <td>{user.email} </td>
                                 <td>
-                                    <button className='btn btn-success'>Read</button>
-                                    <button className='btn btn-secondary mx-1'>Edit</button>
-                                    <button className='btn btn-danger ' >Delete</button>
+                                    <Link to={`/read/${user.id}`} className='btn btn-success'>Read</Link>
+                                    <Link to={`/edit/${user.id}`} className='btn btn-secondary mx-1'>Edit</Link>
+                                    <button className='btn btn-danger ' onClick={() => handleDelete(user.id)} >Delete</button>
 
                                 </td>
                             </tr>
@@ -44,7 +50,7 @@ function DataList() {
                 </tbody>
             </table>
 
-        </div>
+        </div >
     )
 }
 
